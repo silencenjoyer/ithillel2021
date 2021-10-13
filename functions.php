@@ -4,29 +4,29 @@ require_once('autoload.php');
 function get_ships(): array
 {
     
-    $result['starfighter'] = $starfighter = new Ship;
-    $starfighter->setName('Jedi Starfighter')
+    $result['starfighter'] = new Ship();
+    $result['starfighter']->setName('Jedi Starfighter')
         ->setWeaponPower(5)
         ->setStrength(30)
         ->setJediFactor(15)
     ;
 
-    $result['cloakshape_fighter'] = $cloakshapeFighter = new Ship;
-    $cloakshapeFighter->setName('CloakShape Fighter')
+    $result['cloakshape_fighter'] = new Ship();
+    $result['cloakshape_fighter']->setName('CloakShape Fighter')
         ->setWeaponPower(2)
         ->setStrength(70)
         ->setJediFactor(2)
     ;
 
-    $result['super_star_destroyer'] = $superStarDestroyer = new Ship;
-    $superStarDestroyer->setName('Super Star Destroyer')
+    $result['super_star_destroyer'] = new Ship();
+    $result['super_star_destroyer']->setName('Super Star Destroyer')
         ->setWeaponPower(70)
         ->setStrength(500)
         ->setJediFactor(0)
     ;
 
-    $result['rz1_a_wing_interceptor'] = $rz1AWingInterceptor = new Ship;
-    $rz1AWingInterceptor->setName('RZ-1 A-wing interceptor')
+    $result['rz1_a_wing_interceptor'] = new Ship();
+    $result['rz1_a_wing_interceptor']->setName('RZ-1 A-wing interceptor')
         ->setWeaponPower(4)
         ->setStrength(50)
         ->setJediFactor(4)
