@@ -1,9 +1,7 @@
 <?php
 require_once('autoload.php');
 require __DIR__ . '/functions.php';
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+
 $ships = get_ships();
 
 $ship1Name = $_POST['ship1_name'] ?? null;
