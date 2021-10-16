@@ -17,7 +17,7 @@ class Battle
         $this->ship2Quantity = $ship2Quantity;
     }
 
-    public function battleResult(): array
+    public function battle(): object
     {
         $ship1Health = $this->ship1->getStrength() * $this->ship1Quantity;
         $ship2Health = $this->ship2->getStrength() * $this->ship2Quantity;
@@ -57,11 +57,7 @@ class Battle
             $usedJediPowers = $ship1UsedJediPowers;
         }
 
-        return [
-            'winning_ship' => $winningShip,
-            'losing_ship' => $losingShip,
-            'used_jedi_powers' => $usedJediPowers,
-        ];
+        return new BattleResult($winningShip, $losingShip, $usedJediPowers);
     }
 
     private function isJediDestroyShipUsingTheForce(Ship $ship): bool
