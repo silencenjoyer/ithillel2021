@@ -20,7 +20,7 @@ class BattleResult
         return $this->winningShip;
     }
 
-    public function isUsedJediPowers()
+    public function isUsedJediPowers():bool
     {
         return $this->usedJediPowers;
     }
