@@ -2,7 +2,8 @@
 require_once('autoload.php');
 require __DIR__ . '/functions.php';
 
-$ships = get_ships();
+$ships = (new ShipLoader)
+    ->get_ships();
 
 $ship1Name = $_POST['ship1_name'] ?? null;
 $ship1Quantity = $_POST['ship1_quantity'] ?? 1;
@@ -27,7 +28,8 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
 $ship1 = $ships[$ship1Name];
 $ship2 = $ships[$ship2Name];
 
-$outcome = battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
+$outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
+    ->battle();
 ?>
 
 <html lang="ru">
@@ -74,9 +76,9 @@ $outcome = battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
         <h3 class="text-center audiowide">
             Winner:
             <?php
-            if ($outcome['winning_ship']): ?>
+            if ($outcome->getWinningShip()): ?>
                 <?php
-                echo $outcome['winning_ship']->getName(); ?>
+                echo $outcome->getWinningShip()->getName(); ?>
             <?php
             else: ?>
                 Ничья
@@ -85,20 +87,20 @@ $outcome = battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
         </h3>
         <p class="text-center">
             <?php
-            if ($outcome['winning_ship'] == null): ?>
+            if ($outcome->getWinningShip() == null): ?>
 
                 Корабли уничтожили друг друга в эпической битве.
             <?php
             else: ?>
                 The <?php
-                echo $outcome['winning_ship']->getName(); ?>
+                echo $outcome->getWinningShip()->getName(); ?>
                 <?php
-                if ($outcome['used_jedi_powers']): ?>
+                if ($outcome->isUsedJediPowers()): ?>
                     использовал свои Силу Джедая для ошеломляющей победы!
                 <?php
                 else: ?>
                     одолели и уничтожили  <?php
-                    echo $outcome['losing_ship']->getName() ?>s
+                    echo $outcome->getLosingShip()->getName() ?>s
                 <?php
                 endif; ?>
             <?php
