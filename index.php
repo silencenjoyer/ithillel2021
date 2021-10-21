@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/functions.php';
+require_once('autoload.php');
 
 $ships = (new ShipLoader)
     ->get_ships();
