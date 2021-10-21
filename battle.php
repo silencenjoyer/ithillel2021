@@ -2,7 +2,8 @@
 require_once('autoload.php');
 require __DIR__ . '/functions.php';
 
-$ships = get_ships();
+$ships = (new ShipLoader)
+    ->get_ships();
 
 $ship1Name = $_POST['ship1_name'] ?? null;
 $ship1Quantity = $_POST['ship1_quantity'] ?? 1;
@@ -27,7 +28,7 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
 $ship1 = $ships[$ship1Name];
 $ship2 = $ships[$ship2Name];
 
-$outcome = (new Battle($ship1, $ship1Quantity, $ship2, $ship2Quantity))
+$outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
     ->battle();
 ?>
 

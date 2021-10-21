@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class Battle
+class BattleManager
 {
     private Ship $ship1;
     private Ship $ship2;
@@ -17,7 +17,7 @@ class Battle
         $this->ship2Quantity = $ship2Quantity;
     }
 
-    public function battle(): object
+    public function battle(): BattleResult
     {
         $ship1Health = $this->ship1->getStrength() * $this->ship1Quantity;
         $ship2Health = $this->ship2->getStrength() * $this->ship2Quantity;
@@ -57,7 +57,11 @@ class Battle
             $usedJediPowers = $ship1UsedJediPowers;
         }
 
-        return new BattleResult($winningShip, $losingShip, $usedJediPowers);
+        return new BattleResult(
+            $winningShip,
+            $losingShip,
+            $usedJediPowers
+        );
     }
 
     private function isJediDestroyShipUsingTheForce(Ship $ship): bool
