@@ -4,7 +4,7 @@ require_once('DB.php');
 class TokenManager
 {
 
-    public function getRandomString($count): Generator
+    public function getRandomSymbol($count): Generator
     {
         $st = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $randomString = '';
@@ -14,12 +14,12 @@ class TokenManager
         }
     }
 
-    public function generateToken($count): Generator
+    public function generateString($count): Generator
     {
         $tokens = '';
         for ($i = 0; $i <= $count; $i++) {
             $st = '';
-            foreach ($this->getRandomString(15) as $randomString) {
+            foreach ($this->getRandomSymbol(15) as $randomString) {
                 $st .= $randomString;
             }
                 if ($i <= 0) {
@@ -40,7 +40,7 @@ class TokenManager
             $a ++;
 
             if ($a == $step) {
-                foreach($this->generateToken($a) as $result) {
+                foreach($this->generateString($a) as $result) {
                     yield $result;
                 };
                 $a = 0;
@@ -48,7 +48,7 @@ class TokenManager
                 $lastQueryStep = $i;
             } 
             if ($i + $step > $value) {
-                foreach($this->generateToken($value - $lastQueryStep) as $result) {
+                foreach($this->generateString($value - $lastQueryStep) as $result) {
                     yield $result;
                 };
                 break;
