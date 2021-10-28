@@ -105,6 +105,19 @@ $outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
             <?php
             endif; ?>
         </p>
+        <?php
+        echo $outcome->getWinningHealth() != null ? <<<HEREDOC
+            <p class="text-center text-monospace">
+                Оставшаяся прочность победившей стороны: 
+                <span class="label label-success">{$outcome->getWinningHealth()}</span>
+            </p>
+            <p class="text-center text-monospace">
+                Оставшаяся прочность проигравшей стороны: 
+                <span class="label label-danger">{$outcome->getLosingHealth()}</span>
+            </p>
+            HEREDOC 
+            : '';
+        ?>
     </div>
     <a href="/index.php"><p class="text-center"><i class="fa fa-undo"></i> Снова в бой</p></a>
 
