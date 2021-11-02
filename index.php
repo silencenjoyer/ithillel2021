@@ -1,8 +1,9 @@
 <?php
-require_once('autoload.php');
+require_once('bootstrap.php');
 
-$ships = (new ShipLoader)
-    ->get_ships();
+$ships = $container
+    ->getShipLoader()
+    ->getShips();
 
 $errorMessage = '';
 if (isset($_GET['error'])) {
@@ -49,6 +50,10 @@ if (isset($_GET['error'])) {
     <?php endif; ?>
 
     <body>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="index.php">К бою!</a></li>
+        <li role="presentation"><a href="history.php">История боёв</a></li>
+    </ul>
         <div class="container">
             <div class="page-header">
                 <h1>Космическая битва</h1>
@@ -80,20 +85,20 @@ if (isset($_GET['error'])) {
                     <form method="POST" action="/battle.php">
                         <h2 class="text-center">Миссия</h2>
                         <input class="center-block form-control text-field" type="text" name="ship1_quantity" placeholder="Enter Number of Ships" />
-                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship1_name">
+                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship1_id">
                             <option value="">Выберите корабль</option>
-                            <?php foreach ($ships as $key => $ship): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getName(); ?></option>
+                            <?php foreach ($ships as $ship): ?>
+                                <option value="<?php echo $ship->getId(); ?>"><?php echo $ship->getName(); ?></option>
                             <?php endforeach; ?>
                         </select>
                         <br>
                         <p class="text-center">Противник</p>
                         <br>
                         <input class="center-block form-control text-field" type="text" name="ship2_quantity" placeholder="Enter Number of Ships" />
-                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship2_name">
+                        <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship2_id">
                             <option value="">Выберите корабль</option>
-                            <?php foreach ($ships as $key => $ship): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getName(); ?></option>
+                            <?php foreach ($ships as $ship): ?>
+                                <option value="<?php echo $ship->getId(); ?>"><?php echo $ship->getName(); ?></option>
                             <?php endforeach; ?>
                         </select>
                         <br>

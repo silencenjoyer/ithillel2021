@@ -1,20 +1,28 @@
 <?php
-require_once('autoload.php');
+require_once('bootstrap.php');
 
-$ships = (new ShipLoader)
-    ->get_ships();
+$ships = $container
+    ->getShipLoader()
+    ->getShips();
 
-$ship1Name = $_POST['ship1_name'] ?? null;
+$ship1Id = $_POST['ship1_id'] ?? null;
 $ship1Quantity = $_POST['ship1_quantity'] ?? 1;
-$ship2Name = $_POST['ship2_name'] ?? null;
+$ship2Id = $_POST['ship2_id'] ?? null;
 $ship2Quantity = $_POST['ship2_quantity'] ?? 1;
 
-if (!$ship1Name || !$ship2Name) {
+$ship1 = $container
+    ->getShipLoader()
+    ->find($ship1Id);
+$ship2 = $container
+    ->getShipLoader()
+    ->find($ship2Id);
+
+if ($ship1Id === null || $ship2Id === null) {
     header('Location: /index.php?error=missing_data');
     die;
 }
 
-if (!isset($ships[$ship1Name], $ships[$ship2Name])) {
+if ($ship1 === null || $ship2 === null) {
     header('Location: /index.php?error=bad_ships');
     die;
 }
@@ -24,11 +32,9 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
     die;
 }
 
-$ship1 = $ships[$ship1Name];
-$ship2 = $ships[$ship2Name];
-
-$outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
-    ->battle();
+$outcome = $container
+    ->getBattleManager()
+    ->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
 ?>
 
 <html lang="ru">
@@ -52,6 +58,10 @@ $outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
     <![endif]-->
 </head>
 <body>
+<ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="index.php">К бою!</a></li>
+        <li role="presentation"><a href="history.php">История боёв</a></li>
+    </ul>
 <div class="container">
     <div class="page-header">
         <h1>Космическая битва</h1>
@@ -106,7 +116,8 @@ $outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
             endif; ?>
         </p>
         <?php
-        echo $outcome->getWinningHealth() != null ? <<<HEREDOC
+         if ($outcome->getWinningShip() !== null) {
+            echo <<<HEREDOC
             <p class="text-center text-monospace">
                 Оставшаяся прочность победившей стороны: 
                 <span class="label label-success">{$outcome->getWinningHealth()}</span>
@@ -115,8 +126,19 @@ $outcome = (new BattleManager($ship1, $ship1Quantity, $ship2, $ship2Quantity))
                 Оставшаяся прочность проигравшей стороны: 
                 <span class="label label-danger">{$outcome->getLosingHealth()}</span>
             </p>
-            HEREDOC 
-            : '';
+            HEREDOC;
+         } else {
+            echo <<<HEREDOC
+            <p class="text-center text-monospace">
+                У {$outcome->getShip1()->getName()} осталось: 
+                <span class="label label-danger">{$outcome->getWinningHealth()}</span>
+            </p>
+            <p class="text-center text-monospace">
+                У {$outcome->getShip2()->getName()} осталось: 
+                <span class="label label-danger">{$outcome->getLosingHealth()}</span>
+            </p>
+            HEREDOC;
+         }
         ?>
     </div>
     <a href="/index.php"><p class="text-center"><i class="fa fa-undo"></i> Снова в бой</p></a>

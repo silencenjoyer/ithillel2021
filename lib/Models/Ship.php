@@ -4,20 +4,31 @@ declare(strict_types=1);
 
 class Ship
 {
-    private ?string $name = null;
-    private int $weaponPower = 0;
-    private int $strength = 1;
-    private int $jediFactor = 0;
+    private ?int $id = null;
 
-    public function getName(): ?string
-    {
-        return $this->name;
+    private string $name;
+
+    private int $weaponPower = 0;
+
+    private int $strength = 0;
+
+    private int $jediFactor = 0;
+    
+    public function __construct(
+        string $name,
+        int $weaponPower = 0,
+        int $jediFactor = 0,
+        int $strength = 0
+    ) {
+        $this->name = $name;
+        $this->weaponPower = $weaponPower;
+        $this->jediFactor = $jediFactor;
+        $this->strength = $strength;
     }
 
-    public function setName(?string $name): self
+    public function getName(): string
     {
-        $this->name = $name;
-        return $this;
+        return $this->name;
     }
 
     public function getWeaponPower(): int
@@ -25,21 +36,9 @@ class Ship
         return $this->weaponPower;
     }
 
-    public function setWeaponPower(int $weaponPower): self
-    {
-        $this->weaponPower = $weaponPower;
-        return $this;
-    }
-
     public function getStrength(): int
     {
         return $this->strength;
-    }
-
-    public function setStrength(int $strength): self
-    {
-        $this->strength = $strength;
-        return $this;
     }
 
     public function getJediFactor(): int
@@ -47,10 +46,17 @@ class Ship
         return $this->jediFactor;
     }
 
-    public function setJediFactor(int $jediFactor): self
+    public function setId(int $id): self
     {
-        $this->jediFactor = $jediFactor;
+        if ($this->id === null) {
+            $this->id = $id;
+        }
         return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNameAndSpecs(bool $useShortFormat = false): string
