@@ -8,7 +8,7 @@ class Container
 
     private ?BattleManager $battleManager = null;
 
-    private ?ShipLoader $shipLoader = null;
+    private ?ShipStorageInterface  $shipStorage  = null;
 
     private ?BattleHistorySaver $battleHistorySaver = null;
 
@@ -43,12 +43,12 @@ class Container
         return $this->battleManager;
     }
 
-    public function getShipLoader(): ShipLoader
+    public function getShipStorage(): ShipStorageInterface
     {
-        if ($this->shipLoader === null) {
-            $this->shipLoader = new shipLoader($this->getPDO());
+        if ($this->shipStorage  === null) {
+            $this->shipStorage = new PdoShipStorage($this->getPDO());
         }
-        return $this->shipLoader;
+        return $this->shipStorage;
     }
 
     public function getBattleHistorySaver(): BattleHistorySaver

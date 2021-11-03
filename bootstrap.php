@@ -8,8 +8,13 @@ $configuration = [
     'db_psw' => 'bingo',
 ];
 
+require __DIR__ . '/lib/Services/ShipStorageInterface.php';
+require __DIR__ . '/lib/Services/PdoShipStorage.php';
 require __DIR__ . '/lib/Services/Container.php';
+require __DIR__ . '/lib/Models/AbstractShip.php';
 require __DIR__ . '/lib/Models/Ship.php';
+require __DIR__ . '/lib/Models/RebelShip.php';
+require __DIR__ . '/lib/Models/BrokenShip.php';
 require __DIR__ . '/lib/Services/ShipLoader.php';
 require __DIR__ . '/lib/Services/BattleManager.php';
 require __DIR__ . '/lib/Models/BattleHistory.php';

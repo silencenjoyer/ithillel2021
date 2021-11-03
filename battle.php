@@ -1,21 +1,18 @@
 <?php
 require_once('bootstrap.php');
-
-$ships = $container
-    ->getShipLoader()
-    ->getShips();
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+$shipLoader = new ShipLoader($container->getShipStorage());
+$ships = $shipLoader->getShips();
 
 $ship1Id = $_POST['ship1_id'] ?? null;
 $ship1Quantity = $_POST['ship1_quantity'] ?? 1;
 $ship2Id = $_POST['ship2_id'] ?? null;
 $ship2Quantity = $_POST['ship2_quantity'] ?? 1;
 
-$ship1 = $container
-    ->getShipLoader()
-    ->find($ship1Id);
-$ship2 = $container
-    ->getShipLoader()
-    ->find($ship2Id);
+$ship1 = $container->getShipStorage()->findOneById((int) $ship1Id);
+$ship2 = $container->getShipStorage()->findOneById((int) $ship2Id);
 
 if ($ship1Id === null || $ship2Id === null) {
     header('Location: /index.php?error=missing_data');
