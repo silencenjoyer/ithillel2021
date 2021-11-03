@@ -2,81 +2,22 @@
 
 declare(strict_types=1);
 
-class Ship
+class Ship extends AbstractShip
 {
-    private ?int $id = null;
+    public function __construct(string $name)
+    {
+        parent::__construct($name);
 
-    private string $name;
-
-    private int $weaponPower = 0;
-
-    private int $strength = 0;
-
-    private int $jediFactor = 0;
-    
-    public function __construct(
-        string $name,
-        int $weaponPower = 0,
-        int $jediFactor = 0,
-        int $strength = 0
-    ) {
-        $this->name = $name;
-        $this->weaponPower = $weaponPower;
-        $this->jediFactor = $jediFactor;
-        $this->strength = $strength;
+        $this->underRepair = mt_rand(0, 100) < 30;
     }
 
-    public function getName(): string
+    public function isFunctional(): bool
     {
-        return $this->name;
+        return !$this->underRepair;
     }
 
-    public function getWeaponPower(): int
+    public function getType(): string
     {
-        return $this->weaponPower;
-    }
-
-    public function getStrength(): int
-    {
-        return $this->strength;
-    }
-
-    public function getJediFactor(): int
-    {
-        return $this->jediFactor;
-    }
-
-    public function setId(int $id): self
-    {
-        if ($this->id === null) {
-            $this->id = $id;
-        }
-        return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getNameAndSpecs(bool $useShortFormat = false): string
-    {
-        if ($useShortFormat) {
-            return sprintf(
-                '%s: %s/%s/%s',
-                $this->getName(),
-                $this->getWeaponPower(),
-                $this->getJediFactor(),
-                $this->getStrength()
-            );
-        }
-
-        return sprintf(
-            '%s (w: %s, j: %s, s: %s)',
-            $this->getName(),
-            $this->getWeaponPower(),
-            $this->getJediFactor(),
-            $this->getStrength()
-        );
+        return 'Empire';
     }
 }

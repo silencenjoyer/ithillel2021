@@ -1,9 +1,8 @@
 <?php
 require_once('bootstrap.php');
 
-$ships = $container
-    ->getShipLoader()
-    ->getShips();
+$shipLoader = new ShipLoader($container->getShipStorage());
+$ships = $shipLoader->getShips();
 
 $errorMessage = '';
 if (isset($_GET['error'])) {
