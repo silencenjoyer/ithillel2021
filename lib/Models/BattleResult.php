@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 class BattleResult
 {
-    private ?Ship $winningShip = null;
-    private ?Ship $losingShip = null;
-    private ?Ship $ship1 = null;
-    private ?Ship $ship2 = null;
+    private ?AbstractShip $winningShip = null;
+    private ?AbstractShip $losingShip = null;
+    private ?AbstractShip $ship1 = null;
+    private ?AbstractShip $ship2 = null;
     private bool $usedJediPowers = false;
     private int $winningHealth;
     private int $losingHealth;
 
-    public function __construct(?Ship $winningShip, ?Ship $losingShip, Ship $Ship1, Ship $Ship2,  bool $usedJediPowers, int $winningHealth, int $losingHealth)
+    public function __construct(?AbstractShip $winningShip, ?AbstractShip $losingShip, AbstractShip $Ship1, AbstractShip $Ship2,  bool $usedJediPowers, int $winningHealth, int $losingHealth)
     {
         $this->winningShip = $winningShip;
         $this->losingShip = $losingShip;
@@ -23,7 +23,7 @@ class BattleResult
         $this->losingHealth = $losingHealth;
     }
 
-    public function getWinningShip(): ?Ship
+    public function getWinningShip(): ?AbstractShip
     {
         return $this->winningShip;
     }
@@ -33,7 +33,7 @@ class BattleResult
         return $this->usedJediPowers;
     }
 
-    public function getLosingShip(): ?Ship
+    public function getLosingShip(): ?AbstractShip
     {
         return $this->losingShip;
     } 
@@ -48,12 +48,12 @@ class BattleResult
         return $this->losingHealth;
     }
 
-    public function getShip1(): Ship
+    public function getShip1(): AbstractShip
     {
         return $this->ship1;
     }
     
-    public function getShip2(): Ship
+    public function getShip2(): AbstractShip
     {
         return $this->ship2;
     }

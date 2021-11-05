@@ -12,9 +12,9 @@ class BattleManager
     }
 
     public function battle(
-        Ship $ship1,
+        AbstractShip $ship1,
         int $ship1Quantity,
-        Ship $ship2,
+        AbstractShip $ship2,
         int $ship2Quantity): BattleResult
     {
         $ship1Health = $ship1->getStrength() * $ship1Quantity;
@@ -84,7 +84,7 @@ class BattleManager
         );
     }
 
-    private function isJediDestroyShipUsingTheForce(Ship $ship): bool
+    private function isJediDestroyShipUsingTheForce(AbstractShip $ship): bool
     {
         return mt_rand(1, 100) <= $ship->getJediFactor();
     }
