@@ -6,10 +6,12 @@ $configuration = [
     'db_dsn' => 'mysql:host=176.37.72.204;dbname=users_school',
     'db_user' => 'se',
     'db_psw' => 'bingo',
+    "ship_storage" => 'json' //json | db
 ];
 
 require __DIR__ . '/lib/Services/ShipStorageInterface.php';
 require __DIR__ . '/lib/Services/PdoShipStorage.php';
+require __DIR__ . '/lib/Services/JsonShipStorage.php';
 require __DIR__ . '/lib/Services/Container.php';
 require __DIR__ . '/lib/Models/AbstractShip.php';
 require __DIR__ . '/lib/Models/Ship.php';

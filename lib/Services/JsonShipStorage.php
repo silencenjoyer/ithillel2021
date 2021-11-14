@@ -2,43 +2,44 @@
 
 declare(strict_types=1);
 
-class PdoShipStorage implements ShipStorageInterface
+class JsonShipStorage implements ShipStorageInterface
 {
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo) 
-    {
-        $this->pdo = $pdo;
-    }
-
     public function findOneById(int $id): ?AbstractShip
     {
-        $statement = $this->pdo->prepare('SELECT * FROM ship WHERE id = :id;');
-        $statement->execute(['id' => $id]);
-        $getShip = $statement->fetch(PDO::FETCH_ASSOC);
+        $ships = json_decode(
+            file_get_contents('./resources/ships.json',
+            true),
+            true
+        );
 
-        if (!$getShip) {
-            return null;
+        foreach ($ships as $ship) {
+            if ((int) $ship['id'] !== $id) {
+                continue;
+            }
+            $result = $ship;
         }
 
-        return $this->dataToShip($getShip);
+        return $this->dataToShip($result);
     }
 
     public function fetchAll(): array
     {
-        $statement = $this->pdo->prepare("SELECT * FROM ship");
-        $statement->execute();
-
-        $ships = [];
-        foreach($statement->fetchAll() as $ship) {
-            $ships[] = $this->dataToShip($ship);
-        }
+        $shipsFormFile = json_decode(
+            file_get_contents('./resources/ships.json',
+            true),
+            true
+        );
         
+        $ships = [];
+        foreach($shipsFormFile as $ship) {
+            $ships[] = $this->dataToShip($ship);        
+        }
+
         return $ships;
     }
 
     private function dataToShip($data): AbstractShip
-    {
+    {        
         if ($data['team'] === 'rebel') {
             $ship = new RebelShip($data['name']);
         } else {
@@ -50,7 +51,7 @@ class PdoShipStorage implements ShipStorageInterface
             ->setStrength((int) $data['strength'])
             ->setId((int) $data['id'])
         ;
-
+        
         return $ship;
     }
 }

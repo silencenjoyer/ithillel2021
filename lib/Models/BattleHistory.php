@@ -2,13 +2,13 @@
 
 class BattleHistory
 {
-    private Ship $ship1;
+    private AbstractShip $ship1;
 
-    private Ship $ship2;
+    private AbstractShip $ship2;
 
-    private ?Ship $winningShip;
+    private ?AbstractShip $winningShip;
 
-    private ?Ship $loosingShip;
+    private ?AbstractShip $loosingShip;
 
     private int $quantShip1;
 
@@ -21,10 +21,10 @@ class BattleHistory
     private string $time;
 
     public function __construct(
-        Ship $ship1,
-        Ship $ship2,
-        ?Ship $winningShip,
-        ?Ship $loosingShip,
+        AbstractShip $ship1,
+        AbstractShip $ship2,
+        ?AbstractShip $winningShip,
+        ?AbstractShip $loosingShip,
         int $quantShip1,
         int $quantShip2,
         int $winnerHealth,
@@ -43,22 +43,22 @@ class BattleHistory
         $this->time = $time;
     }
 
-    public function getShip1(): Ship
+    public function getShip1(): AbstractShip
     {
         return $this->ship1;
     }
 
-    public function getShip2(): Ship
+    public function getShip2(): AbstractShip
     {
         return $this->ship2;
     }
 
-    public function getWinningShip(): ?Ship
+    public function getWinningShip(): ?AbstractShip
     {
         return $this->winningShip;
     }
 
-    public function getLoosingShip(): ?Ship
+    public function getLoosingShip(): ?AbstractShip
     {
         return $this->loosingShip;
     }

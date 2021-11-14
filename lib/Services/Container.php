@@ -46,7 +46,13 @@ class Container
     public function getShipStorage(): ShipStorageInterface
     {
         if ($this->shipStorage  === null) {
-            $this->shipStorage = new PdoShipStorage($this->getPDO());
+            if ($this->configuration['ship_storage'] === 'db') {
+                $this->shipStorage = new PdoShipStorage($this->getPDO());
+            } else if ($this->configuration['ship_storage'] === 'json') {
+                $this->shipStorage = new JsonShipStorage();
+            } else {
+                throw new Exception ('Configuration "ship_storage" could be only "db" or "json"');
+            }
         }
         return $this->shipStorage;
     }

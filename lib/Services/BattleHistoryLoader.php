@@ -36,19 +36,19 @@ class BattleHistoryLoader
         $winner = null;
         $looser = null;
         $ship1 = $this->container
-            ->getShipLoader()
-            ->find((int) $data['ship1_id']);
+            ->getShipStorage()
+            ->findOneById((int) $data['ship1_id']);
         $ship2 = $this->container
-            ->getShipLoader()
-            ->find((int) $data['ship1_id']);
+            ->getShipStorage()
+            ->findOneById((int) $data['ship1_id']);
         
             if ($data['winner_ship_id'] !== null) {
             $winner = $this->container
-                ->getShipLoader()
-                ->find((int) $data['winner_ship_id']);
+                ->getShipStorage()
+                ->findOneById((int) $data['winner_ship_id']);
             $looser = $this->container
-                ->getShipLoader()
-                ->find((int) $data['defeat_ship_id']);
+                ->getShipStorage()
+                ->findOneById((int) $data['defeat_ship_id']);
         }
 
         $history = new BattleHistory(
