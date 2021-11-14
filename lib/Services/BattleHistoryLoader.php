@@ -14,7 +14,7 @@ class BattleHistoryLoader
         $this->container = $container;
     }
 
-    public function loadHistory($from, $to)
+    public function loadHistory(int $from, int $to): HistoryCollection
     {
         $statement = $this->pdo->prepare("SELECT * FROM battle_history ORDER BY id DESC LIMIT $from, $to");
         $statement->execute();
@@ -28,10 +28,10 @@ class BattleHistoryLoader
             $items[] = $this->dbToItem($item);
         }
 
-        return $items;
+        return new HistoryCollection($items);
     }
 
-    private function dbToItem($data)
+    private function dbToItem(array $data): BattleHistory
     {
         $winner = null;
         $looser = null;

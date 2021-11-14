@@ -14,6 +14,7 @@ require __DIR__ . '/lib/Services/PdoShipStorage.php';
 require __DIR__ . '/lib/Services/JsonShipStorage.php';
 require __DIR__ . '/lib/Services/Container.php';
 require __DIR__ . '/lib/Models/AbstractShip.php';
+require __DIR__ . '/lib/Models/HistoryCollection.php';
 require __DIR__ . '/lib/Models/Ship.php';
 require __DIR__ . '/lib/Models/RebelShip.php';
 require __DIR__ . '/lib/Models/BrokenShip.php';
