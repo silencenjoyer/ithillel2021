@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 class PostBuilder implements PostBuilderInterface
 {
-
     private Post $post;
 
     public function __construct()
