@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 class SenderPost implements SenderInterface
 {
-    public function send(int $phone, string $text): void
+    public function send(string $url, string $token, int $phone, string $text): void
     {
-        $token = 'your_bearer_token';
-        $url = 'https://send.com';
-
         $data = json_encode([
             'phone' => [$phone],
             'message' => $text,
