@@ -6,7 +6,7 @@ class TestSmsProvider extends Provider
 {
     public function setUrl(): Provider
     {
-        $this->url = 'https://send.com';
+        $this->url = 'https://testsms.com';
     
         return $this;
     }
