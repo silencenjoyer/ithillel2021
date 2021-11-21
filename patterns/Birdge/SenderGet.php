@@ -2,10 +2,18 @@
 
 declare(strict_types=1);
 
-class SenderGet implements SenderInterface
+class SenderGet extends AbstractSender
 {
-    public function send(string $url, string $token, int $phone, string $text): void
+    public function send(int $phone, string $text): void
     {
-        file_get_contents("$url/sys/send.php?token=$token&phones=$phone&text=$text");
+        $query = sprintf(
+            '%s/send.php?token=%s&phones=%s&text=%s',
+            $this->provider->getUrl(),
+            $this->provider->getToken(),
+            $phone,
+            $text
+        );
+
+        file_get_contents($query);
     }
 }

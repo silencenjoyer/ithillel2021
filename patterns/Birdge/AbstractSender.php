@@ -2,19 +2,16 @@
 
 declare(strict_types=1);
 
-class AbstractSender
+abstract class AbstractSender
 {
-    protected SenderInterface $implementation;
-    protected string $url = 'https://send.com';
-    protected string $token = 'your_bearer_token';
+    protected Provider $provider;
 
-    public function __construct(SenderInterface $implementation)
+    public function __construct(Provider $provider)
     {
-        $this->implementation = $implementation;
+        $this->provider = $provider;
+        $this->provider->setUrl()
+            ->setToken();
     }
 
-    public function operationSend(int $phone, string $text): void
-    {
-        $this->implementation->send($this->url, $this->token, $phone, $text);
-    }
+    abstract public function send(int $phone, string $text): void;
 }

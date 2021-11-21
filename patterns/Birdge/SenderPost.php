@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-class SenderPost implements SenderInterface
+class SenderPost extends AbstractSender
 {
-    public function send(string $url, string $token, int $phone, string $text): void
+    public function send(int $phone, string $text): void
     {
         $data = json_encode([
             'phone' => [$phone],
@@ -14,12 +14,12 @@ class SenderPost implements SenderInterface
 
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL => $url,
+            CURLOPT_URL => $this->provider->getUrl(),
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
-                'Authorization: Bearer ' . $token,
+                'Authorization: Bearer ' . $this->provider->getToken(),
                 'Content-Type: application/json'
             ]
         ]);
